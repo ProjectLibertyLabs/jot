@@ -11,6 +11,7 @@ public class Transaction {
     protected ConvictionVotingPallet convictionVoting;
     protected MultisigPallet multisig;
     protected MsaPallet msa;
+    protected SchemasPallet schemas;
     protected StakingPallet staking;
     protected SystemPallet system;
     protected UtilityPallet utility;
@@ -22,6 +23,7 @@ public class Transaction {
         convictionVoting = new ConvictionVotingPallet(api);
         multisig = new MultisigPallet(api);
         msa = new MsaPallet(api);
+        schemas = new SchemasPallet(api);
         staking = new StakingPallet(api);
         system = new SystemPallet(api);
         utility = new UtilityPallet(api);
@@ -41,6 +43,10 @@ public class Transaction {
 
     public MsaPallet msa() {
         return msa;
+    }
+
+    public SchemasPallet schemas() {
+        return schemas;
     }
 
     public StakingPallet staking() {
