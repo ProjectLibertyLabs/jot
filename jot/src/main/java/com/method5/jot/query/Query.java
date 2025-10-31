@@ -11,6 +11,7 @@ public class Query {
     protected ChainRpc chain;
     protected PaymentRpc payment;
     protected StateRpc state;
+    protected StatefulStorageRpc statefulStorage;
     protected StorageQuery storage;
     protected SystemRpc system;
 
@@ -21,6 +22,7 @@ public class Query {
         this.chain = new ChainRpc(api);
         this.payment = new PaymentRpc(api);
         this.state = new StateRpc(api);
+        this.statefulStorage = new StatefulStorageRpc(api);
         this.storage = new StorageQuery(api);
         this.system = new SystemRpc(api);
     }
@@ -40,6 +42,8 @@ public class Query {
     public StateRpc state() {
         return state;
     }
+
+    public StatefulStorageRpc statefulStorage() { return statefulStorage; }
 
     public StorageQuery storage() {
         return storage;

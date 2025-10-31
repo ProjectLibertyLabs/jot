@@ -15,6 +15,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -83,24 +84,35 @@ public class E2ETest {
 
       SigningProvider aliceSigningProvider = alice.getSigner();
 
-      String itemizedSchemaModel = "{\"key1\":1, \"key2\": 2}";
-      List<Integer> schemasSettings = List.of( 0);
-      Call call = api.tx().schemas().createSchemaV3(
+      Call msaCall = api.tx().msa().createMsa();
+
+      msaCall.signAndWaitForResults(aliceSigningProvider);
+
+      String itemizedSchemaModel = "{\"key1\":1, \"key2\":2}";
+      List<Integer> schemasSettings = List.of( 1);
+      Call createSchemaV3Call = api.tx().schemas().createSchemaV3(
           itemizedSchemaModel,
           (byte) 0,
           (byte) 2,
           schemasSettings,
-          "dsnp.public-follow"
+"dsnp.public-follow"
       );
 
-      System.out.println("Call data: " + HexUtil.bytesToHex(call.callData()));
+      System.out.println("Call data: " + HexUtil.bytesToHex(createSchemaV3Call.callData()));
 
-      ExtrinsicResult result = call.signAndWaitForResults(aliceSigningProvider);
+      ExtrinsicResult result = createSchemaV3Call.signAndWaitForResults(aliceSigningProvider);
 
       List<EventRecord> eventRecordList = result.getEvents();
       for (EventRecord eventRecord : eventRecordList) {
         System.out.println("Event: " + eventRecord.method());
+        System.out.println("Schmea: " + eventRecord.attributes().toString());
       }
+
+      Object result1 = api.query().statefulStorage().getItemizedStorage(BigInteger.ONE, 16001);
+
+      System.out.println(result1);
+
+      //TODO: Now add an item in there, then check again if there's storage there
 
     } catch (Exception e) {
       throw new RuntimeException(e);
