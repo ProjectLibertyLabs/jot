@@ -2,6 +2,7 @@ package com.method5.jot.extrinsic;
 
 import com.method5.jot.events.EventRecord;
 import com.method5.jot.extrinsic.call.Call;
+import com.method5.jot.query.model.ItemizedStoragePageResponse;
 import com.method5.jot.rpc.PolkadotWs;
 import com.method5.jot.signing.SigningProvider;
 import com.method5.jot.util.HexUtil;
@@ -105,12 +106,12 @@ public class E2ETest {
       List<EventRecord> eventRecordList = result.getEvents();
       for (EventRecord eventRecord : eventRecordList) {
         System.out.println("Event: " + eventRecord.method());
-        System.out.println("Schmea: " + eventRecord.attributes().toString());
+        System.out.println("Schema: " + eventRecord.attributes().toString());
       }
 
-      Object result1 = api.query().statefulStorage().getItemizedStorage(BigInteger.ONE, 16001);
+      ItemizedStoragePageResponse result1 = api.query().statefulStorage().getItemizedStorage(BigInteger.ONE, 16001);
 
-      System.out.println(result1);
+      System.out.println(result1.toString());
 
       //TODO: Now add an item in there, then check again if there's storage there
 
