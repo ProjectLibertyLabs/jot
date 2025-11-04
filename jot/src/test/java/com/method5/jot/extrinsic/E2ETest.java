@@ -1,6 +1,5 @@
 package com.method5.jot.extrinsic;
 
-import com.method5.jot.entity.DispatchError;
 import com.method5.jot.events.EventRecord;
 import com.method5.jot.extrinsic.call.*;
 import com.method5.jot.rpc.PolkadotWs;
@@ -99,7 +98,7 @@ public class E2ETest {
       System.out.println(failure.getError().toHuman());
       Assertions.assertEquals("Module[60] Error[0]: KeyAlreadyRegistered", failure.getError().toHuman());
 
-      Object error = mapErrorNameToErrorClass(failure.getError().name, failure.getError().moduleIndex);
+      Object error = mapErrorNameToErrorClass(failure.getError().getName(), failure.getError().getModuleIndex());
       Assertions.assertInstanceOf(KeyAlreadyRegisteredError.class, error);
 
     } catch (Exception e) {

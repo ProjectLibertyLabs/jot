@@ -20,10 +20,18 @@ public class DispatchError {
         UNKNOWN
     }
 
-    public final Kind kind;
-    public final int moduleIndex;
-    public final int errorCode;
-    public final String name;
+    private final Kind kind;
+    private final int moduleIndex;
+    private final int errorCode;
+    private final String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public int getModuleIndex() {
+        return moduleIndex;
+    }
 
     private DispatchError(Kind kind, int moduleIndex, int errorCode, String name) {
         this.kind = kind;
