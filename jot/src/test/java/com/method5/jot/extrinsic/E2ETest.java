@@ -1,7 +1,12 @@
 package com.method5.jot.extrinsic;
 
+import com.method5.jot.entity.MultiSignature;
 import com.method5.jot.events.EventRecord;
 import com.method5.jot.extrinsic.call.Call;
+import com.method5.jot.extrinsic.model.AddItemAction;
+import com.method5.jot.extrinsic.model.ItemAction;
+import com.method5.jot.extrinsic.model.ItemizedSignaturePayloadV2;
+import com.method5.jot.query.model.AccountId;
 import com.method5.jot.query.model.ItemizedStoragePageResponse;
 import com.method5.jot.rpc.PolkadotWs;
 import com.method5.jot.signing.SigningProvider;
@@ -114,6 +119,26 @@ public class E2ETest {
       System.out.println(result1.toString());
 
       //TODO: Now add an item in there, then check again if there's storage there
+      byte[] payload = new byte[] { 0x48, 101, 108, 108, 111 };
+      System.out.println("payload to hex" + HexUtil.bytesToHex(payload));
+      List<ItemAction> actions = List.of(new AddItemAction(payload));
+      ItemizedSignaturePayloadV2 itemizedPayload = new ItemizedSignaturePayloadV2(16001, BigInteger.ZERO, 200L, actions);
+
+      Call applyItemsCall = api.tx().statefulStorage().applyItemActionsWithSignatureV2(
+          AccountId.fromSS58(alice.getAddress()),
+          (byte) 1,
+          HexUtil.hexToBytes("0xd61ec2e33007b05cc6bf3fb8d9674bfe1662403a031fc28d4c90650c221e221328e9c4a65093df163d96b251afa1a0aa0b1b4157ebf032975ca89a84aca44488"),
+          itemizedPayload
+      );
+
+      System.out.println("Apply Items Call Data: " + HexUtil.bytesToHex(applyItemsCall.callData()));
+
+      ExtrinsicResult applyItemsResult = applyItemsCall.signAndWaitForResults(aliceSigningProvider);
+      List<EventRecord> applyItemsEventRecordList = applyItemsResult.getEvents();
+      for (EventRecord eventRecord : applyItemsEventRecordList) {
+        System.out.println("Event: " + eventRecord.method());
+        System.out.println("Schema: " + eventRecord.attributes().toString());
+      }
 
     } catch (Exception e) {
       throw new RuntimeException(e);

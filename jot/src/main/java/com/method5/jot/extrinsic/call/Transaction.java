@@ -13,6 +13,7 @@ public class Transaction {
     protected MsaPallet msa;
     protected SchemasPallet schemas;
     protected StakingPallet staking;
+    protected StatefulStoragePallet statefulStorage;
     protected SystemPallet system;
     protected UtilityPallet utility;
 
@@ -25,6 +26,7 @@ public class Transaction {
         msa = new MsaPallet(api);
         schemas = new SchemasPallet(api);
         staking = new StakingPallet(api);
+        statefulStorage = new StatefulStoragePallet(api);
         system = new SystemPallet(api);
         utility = new UtilityPallet(api);
     }
@@ -52,6 +54,8 @@ public class Transaction {
     public StakingPallet staking() {
         return staking;
     }
+
+    public StatefulStoragePallet statefulStorage() {return statefulStorage;}
 
     public SystemPallet system() {
         return system;
