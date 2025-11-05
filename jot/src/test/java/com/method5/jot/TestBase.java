@@ -29,6 +29,7 @@ public class TestBase {
             "https://rpc-polkadot.luckyfriday.io" };
 
     public static final String[] DOT_RPC_SERVERS = new String[] {
+            "wss://rpc-polkadot.luckyfriday.io",
             "wss://polkadot-rpc.dwellir.com",
             "wss://polkadot.api.onfinality.io/public-ws",
             "wss://polkadot.public.curie.radiumblock.co/ws",
