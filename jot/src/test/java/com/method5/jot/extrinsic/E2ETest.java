@@ -118,9 +118,7 @@ public class E2ETest {
 
       System.out.println(result1.toString());
 
-      //TODO: Now add an item in there, then check again if there's storage there
       byte[] payload = new byte[] { 0x48, 101, 108, 108, 111 };
-      System.out.println("payload to hex" + HexUtil.bytesToHex(payload));
       List<ItemAction> actions = List.of(new AddItemAction(payload));
       ItemizedSignaturePayloadV2 itemizedPayload = new ItemizedSignaturePayloadV2(16001, BigInteger.ZERO, 200L, actions);
 
@@ -139,6 +137,21 @@ public class E2ETest {
         System.out.println("Event: " + eventRecord.method());
         System.out.println("Schema: " + eventRecord.attributes().toString());
       }
+
+      ItemizedStoragePageResponse result3 = api.query().statefulStorage().getItemizedStorage(BigInteger.ONE, 16001);
+      Assertions.assertEquals(result3.getItems().size(), 1);
+      Assertions.assertEquals(result3.getSchema_id(), 16001);
+      Assertions.assertEquals(result3.getItems().getFirst().getPayload(), "0x" + HexUtil.bytesToHex(payload));
+
+      ExtrinsicResult applyItemsFailureResult = applyItemsCall.signAndWaitForResults(aliceSigningProvider);
+      List<EventRecord> applyItemsFailureEventRecordList = applyItemsFailureResult.getEvents();
+      for (EventRecord eventRecord : applyItemsFailureEventRecordList) {
+        System.out.println("Event: " + eventRecord.method());
+        System.out.println("Schema: " + eventRecord.attributes().toString());
+      }
+
+      System.out.println(applyItemsFailureResult.getError().toHuman());
+
 
     } catch (Exception e) {
       throw new RuntimeException(e);
