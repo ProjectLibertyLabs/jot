@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ChainSpecBuilderTest extends TestBase {
+    public static final int CURRENT_SPEC_VERSION = 2000000; //This will need to be updated occasionally
     private static final Logger logger = LoggerFactory.getLogger(ChainSpecBuilderTest.class);
 
     @Test
@@ -30,7 +31,7 @@ public class ChainSpecBuilderTest extends TestBase {
         assertEquals(0, chainSpec.getSs58Prefix());
         assertEquals("Polkadot", chainSpec.getId());
         assertEquals("Parity Polkadot", chainSpec.getName());
-        assertEquals(1007001, chainSpec.getSpecVersion());
+        assertEquals(CURRENT_SPEC_VERSION, chainSpec.getSpecVersion());
 
         logger.info(chainSpec.toString());
 

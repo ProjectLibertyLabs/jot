@@ -102,7 +102,7 @@ public class WsApiTest extends TestBase {
 
             assertTrue(api.unsubscribe("chain_unsubscribeNewHead", subscriptionID));
         } catch (Exception e) {
-            fail("Failed to initialize or close RPC client: " + e.getMessage());
+            fail("Failed to initialize or close RPC client", e);
         }
     }
 
