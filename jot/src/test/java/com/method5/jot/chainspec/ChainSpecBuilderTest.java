@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ChainSpecBuilderTest extends TestBase {
-    public static final int CURRENT_SPEC_VERSION = 2000000; //This will need to be updated occasionally
+    public static final int CURRENT_SPEC_VERSION = 2000001; //This will need to be updated occasionally
     private static final Logger logger = LoggerFactory.getLogger(ChainSpecBuilderTest.class);
 
     @Test
