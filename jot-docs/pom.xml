@@ -5,9 +5,9 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>com.method5</groupId>
+    <groupId>io.projectliberty</groupId>
     <artifactId>jot-parent</artifactId>
-    <version>1.0.2</version>
+    <version>${unfinished.version}</version>
   </parent>
 
   <artifactId>jot-docs</artifactId>
